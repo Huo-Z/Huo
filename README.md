@@ -1,3 +1,2 @@
 # Huo
-# In order to study C++ and Python, there are lots of codes.
-# So they should be saved in this place.
+# In order to study C++ and Python, a lot of codes should be saved in this place.
