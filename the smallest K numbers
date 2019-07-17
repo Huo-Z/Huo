@@ -1,0 +1,54 @@
+/*
+剑指offer算法题
+输入n个整数，找出其中最小的K个数。例如输入4,5,1,6,2,7,3,8这8个数字，则最小的4个数字是1,2,3,4。
+特殊情况为：K比输入的数还要多，就返回空的容器
+独立完成的代码如下：
+*/
+class Solution {
+public:
+    vector<int> GetLeastNumbers_Solution(vector<int> input, int k) 
+    {
+        //先创建一个空的容器，用来存放最小的K个数
+        vector<int> small;
+        //考虑特殊情况，如果输入的为空容器，或者K不正常，都直接返回空容器
+        if(input.size()<=0||k<=0||k>input.size())
+            return small;
+            
+        //正常情况，就先传一个数进去再说
+        //把原容器的每个数都试图往新容器里面塞，同时要对它们进行排序（插入排序为好）
+        //如果已经存放满了K个数，那么判断试图即将塞入的数是否比新容器中最大的那个数小
+        //如果是，就把它换成新来的数，再对它进行插入排序，否则跳过
+        vector<int>::iterator iter_input=input.begin();
+        small.push_back(*iter_input);
+        for(iter_input++;iter_input!=input.end();iter_input++)//注意这里要把迭代器初始为第二个数
+        {
+            if(small.size()<k)
+            {
+                //如果small容器没满，就一直往里面塞数字
+                small.push_back(*iter_input);
+                vector<int>::iterator iter_cur=small.end()-1;
+                //每塞一个数，就对它插入排序，保证容器small是有序的
+                while(iter_cur>small.begin()&&*iter_cur<*(iter_cur-1))
+                {
+                    swap(*iter_cur,*(iter_cur-1));
+                    iter_cur--;
+                }
+            }
+            else
+            {
+                //如果small容器满了，就判断下一个数是否要替换这里面的
+                vector<int>::iterator iter_cur=small.end()-1;
+                if(*iter_input>=*iter_cur)
+                    continue;
+                //如果要替换，就换完之后进行插入排序
+                *iter_cur=*iter_input;
+                while(iter_cur>small.begin()&&*iter_cur<*(iter_cur-1))
+                {
+                    swap(*iter_cur,*(iter_cur-1));
+                    iter_cur--;
+                }
+            }
+        }
+        return small;
+    }
+};
