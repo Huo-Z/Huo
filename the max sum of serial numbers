@@ -1,0 +1,28 @@
+/*
+剑指offer题
+求连续子数组的最大和
+例如:{6,-3,-2,7,-15,1,2,2},连续子向量的最大和为8(从第0个开始,到第3个为止)。给一个数组，返回它的最大连续子序列的和
+*/
+class Solution 
+{
+public:
+    int FindGreatestSumOfSubArray(vector<int> array) 
+    {
+        //考虑特殊情况，如果输入的数据为空，就返回0
+        if(array.size()<=0)
+            return 0;
+        int max=-0x80000;//把max初始化为一个足够小的整数
+        int current=0;
+        vector<int>::iterator iter=array.begin();
+        for(;iter!=array.end();iter++)
+        {
+            if(current<=0)
+                current=*iter;
+            else
+                current+=*iter;
+            if(current>max)
+                max=current;
+        }
+        return max;
+    }
+};
