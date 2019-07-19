@@ -13,13 +13,17 @@ public:
             return 0;
         int max=-0x80000;//把max初始化为一个足够小的整数
         int current=0;
+        //获取迭代器，用来遍历数组中的每个数
         vector<int>::iterator iter=array.begin();
         for(;iter!=array.end();iter++)
         {
+            //如果当前累计总和小于等于0，那么说明前面的数加起来会连累当前遍历的数，因此丢弃前面的，当前总和从当前遍历的开始算
             if(current<=0)
                 current=*iter;
+            //如果大于零，就继续加当前的数纳入总和
             else
                 current+=*iter;
+            //如果发现此时总和比原来总和要大，就把它暂时看作最大和
             if(current>max)
                 max=current;
         }
